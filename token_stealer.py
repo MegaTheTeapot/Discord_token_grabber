@@ -1,3 +1,4 @@
+# TODO add embed support
 
 import os
 import re
