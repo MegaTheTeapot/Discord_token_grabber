@@ -10,6 +10,9 @@ This version of the grabber only supports **Windows**.
  - Only requests library needed
  - Can be used as a library
 
+# Example Message
+![example](https://imgur.com/HfGR31U.png "example")
+
 <br>
 
 # How to use
