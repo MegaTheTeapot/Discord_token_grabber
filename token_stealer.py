@@ -3,9 +3,6 @@
 # CONFIGURATION:
 # your webhook URL
 WEBHOOK_URL = 'WEBHOOK HERE'
-# https://rapidapi.com/ api key (sign in to get)
-# only required if SEND_IP = True
-API_KEY = ''
 # determines what information you wanna send
 SEND_IP = False
 SEND_PC_INFO = False
