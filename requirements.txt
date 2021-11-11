@@ -1,0 +1,3 @@
+requests>=2.26.0
+# also can use
+# pyinstaller>=4.6
