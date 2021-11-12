@@ -37,9 +37,6 @@ pyinstaller --onefile --console --name "program_name_here" --no-embed-manifest -
 
 # Changelog:
 ```
-- added SEND_IP and SEND_PC_INFO options
-- added EMBED to MODE (not ready to use yet)
-- added EXPERIMANTAL bool
-- added getIP() function
-- added getUserInfo() function
+- added embed support
+- added getPremiumType() function
 ```
