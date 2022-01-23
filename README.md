@@ -1,7 +1,7 @@
 <h1 align="center">Discord Token Grabber</h1>
 <p align="center">A Discord token grabber written in Python 3.</p>
 
-This version of the grabber only supports **Windows**.
+This version of the grabber **only** supports **Windows**.
 
 # Features
  - Transfers via Discord webhook
@@ -39,3 +39,5 @@ pyinstaller --onefile --console --name "program_name_here" --no-embed-manifest -
 - a whole lot of code refactoring
 - added simple , fancy , raw functions
 ```
+
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=mega145&repo=Discord_token_grabber&bg_color=151515)](https://github.com/anuraghazra/github-readme-stats)
