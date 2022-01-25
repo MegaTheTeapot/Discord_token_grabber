@@ -22,8 +22,8 @@ PING_ME = False
 
 '''
 CHANGELOG:
-- a whole lot of code refactoring
-- added simple , fancy , raw functions
+- Cleaning up code
+- minified version
 '''
 
 # CODE
