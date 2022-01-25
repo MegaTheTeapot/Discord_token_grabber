@@ -2,6 +2,7 @@
 <p align="center">A Discord token grabber written in Python 3. </p>
 
 ![visitor badge](https://visitor-badge.glitch.me/badge?page_id=mega145.Discord_token_grabber&left_color=red&right_color=green)
+[![wakatime](https://wakatime.com/badge/user/0cbbc6ac-da04-48ba-9a02-7d5bcf8cd1af/project/ec0a8e59-d0aa-4585-9074-438fbd89ef56.svg)](https://wakatime.com/badge/user/0cbbc6ac-da04-48ba-9a02-7d5bcf8cd1af/project/ec0a8e59-d0aa-4585-9074-438fbd89ef56)
 
 This version of the grabber **only** supports **Windows**.
 # Features
