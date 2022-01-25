@@ -1,8 +1,7 @@
 <h1 align="center">Discord Token Grabber</h1>
-<p align="center">A Discord token grabber written in Python 3.</p>
+<p align="center">A Discord token grabber written in Python 3.![visitor badge](https://visitor-badge.glitch.me/badge?page_id=mega145.Discord_token_grabber&left_color=red&right_color=green) </p>
 
 This version of the grabber **only** supports **Windows**.
-![visitor badge](https://visitor-badge.glitch.me/badge?page_id=mega145.Discord_token_grabber&left_color=red&right_color=green) 
 # Features
  - Transfers via Discord webhook
  - Sends: Public IP, PCName, PCUserName, Windows Version, Discord username, descriminator , token
