@@ -13,6 +13,7 @@ This version of the grabber **only** supports **Windows**.
  - Can be used as a library
 
 # Example Message
+![fancy](https://imgur.com/pHKYnQl.png "example of fancy mode")  
 ![example](https://imgur.com/HfGR31U.png "example of simple mode")
 
 
