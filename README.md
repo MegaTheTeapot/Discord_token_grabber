@@ -39,8 +39,7 @@ pyinstaller --onefile --console --name "program_name_here" --no-embed-manifest -
 
 # Changelog:
 ```
-- a whole lot of code refactoring
-- added simple , fancy , raw functions
+- some fixes
 ```
 
 [![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=mega145&repo=Discord_token_grabber&bg_color=151515)](https://github.com/anuraghazra/github-readme-stats)
