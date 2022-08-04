@@ -1,3 +1,6 @@
+> **Warning**
+> The method of grabbing tokens no longer works hence im archiving the repo. I will not update this.
+
 <h1 align="center">Discord Token Grabber</h1>
 <p align="center">A Discord token grabber written in Python 3. </p>
 
